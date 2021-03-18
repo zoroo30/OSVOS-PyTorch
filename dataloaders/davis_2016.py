@@ -3,7 +3,7 @@ from __future__ import division
 import os
 import numpy as np
 import cv2
-from scipy.misc import imresize
+from scipy.transform import resize 
 
 from dataloaders.helpers import *
 from torch.utils.data import Dataset
@@ -94,9 +94,9 @@ class DAVIS2016(Dataset):
             gt = np.zeros(img.shape[:-1], dtype=np.uint8)
 
         if self.inputRes is not None:
-            img = imresize(img, self.inputRes)
+            img = resize(img, self.inputRes)
             if self.labels[idx] is not None:
-                label = imresize(label, self.inputRes, interp='nearest')
+                label = resize(label, self.inputRes, interp='nearest')
 
         img = np.array(img, dtype=np.float32)
         img = np.subtract(img, np.array(self.meanval, dtype=np.float32))
